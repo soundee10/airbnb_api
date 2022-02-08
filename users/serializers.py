@@ -1,8 +1,22 @@
+from sre_constants import GROUPREF_EXISTS
+
+from click import password_option
 from rest_framework import serializers
 from .models import User
 
-class TinyUserSerialzer(serializers.ModelSerializer):
+
+class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("id", "username", "superhost")
+        exclude = (
+            "groups",
+            "user_permissions",
+            "password",
+            "last_login",
+            "is_superuser",
+            "is_staff",
+            "is_active",
+            "date_joined",
+            "favs",
+        )
