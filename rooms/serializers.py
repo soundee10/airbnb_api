@@ -21,13 +21,18 @@ class WriteRoomSerializer(serializers.Serializer):
         return Room.objects.create(**validated_data)
 
     def validate(self, data):
-        check_in = data.get("check_in")
-        check_out = data.get("check_out")
-        if check_in >= check_out:
-            raise serializers.ValidationError(
-                "Check out date must be after check-in")
-        else:
-            return data
+        if not self.instance:
+            check_in = data.get("check_in")
+            check_out = data.get("check_out")
+            if check_in >= check_out:
+                raise serializers.ValidationError(
+                    "Check out date must be after check-in")
+        return data
+
+    def update(self, instance, validated_data):
+        print(validated_data)
+        instance.name = validated_data.get('name', instance.name)
+        return instance
 
 
 class ReadRoomSerializer(serializers.ModelSerializer):
