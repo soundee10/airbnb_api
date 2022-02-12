@@ -55,7 +55,8 @@ class RoomView(APIView):
             serializer = WriteRoomSerializer(
                 room, data=request.data, partial=True)
             if serializer.is_valid():
-                serializer.save()
+                room = serializer.save()
+                return Response(ReadRoomSerializer(room).data)
             else:
                 return Response(serializers.errors, stats=status.HTTP_400_BAD_REQUEST)
             return Response()
