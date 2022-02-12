@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.serializers import UserSerializer
+from users.serializers import RelatedUserSerialzer
 from .models import Room
 
 
@@ -46,13 +46,13 @@ class WriteRoomSerializer(serializers.Serializer):
         instance.instant_book = validated_data.get("instant_book", instance.instant_book)
 
         instance.save()
-        
+
         return instance
 
 
 class ReadRoomSerializer(serializers.ModelSerializer):
 
-    user = UserSerializer()
+    user = RelatedUserSerialzer()
 
     class Meta:
         model = Room
