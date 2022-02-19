@@ -34,4 +34,12 @@ class ReadUserSerializer(serializers.ModelSerializer):
             "is_staff",
             "is_active",
             "date_joined",
+            "favs",
         )
+
+
+class WriteUserSerialzer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ("username", "first_name", "last_name", "email")
