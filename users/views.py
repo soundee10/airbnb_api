@@ -77,6 +77,7 @@ def user_detail(reqeust, pk):
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+
 @api_view(["POST"])
 def login(request):
     username = request.get.data("username")
@@ -86,8 +87,8 @@ def login(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
     user = authenticate(username=username, password=password)
     if user is not None:
-        encoded_jwt = jwt.encode({"id": user.pk}, settings.SECRET_KEY, algorithm="HS256")
+        encoded_jwt = jwt.encode(
+            {"pk": user.pk}, settings.SECRET_KEY, algorithm="HS256")
         return Response(data={'token': encoded_jwt})
     else:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
-    
