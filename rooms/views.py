@@ -5,9 +5,10 @@ from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import permissions
 from rest_framework import status
+from rooms import serializers
 from .serializers import RoomSerializer
 from .models import Room
-from rooms import serializers
+from .permissions import IsOnwer
 
 
 class RoomViewSet(ModelViewSet):
@@ -23,6 +24,7 @@ class RoomViewSet(ModelViewSet):
             permission_classes = [permissions.IsAuthenticated]
         else:
             permission_classes = [IsOnwer]
+        return [permission() for permission in permission_classes]
         
 
 
